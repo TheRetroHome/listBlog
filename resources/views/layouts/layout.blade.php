@@ -21,12 +21,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+            @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="">{{Auth::user()->name}}</a>
+                </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                 </li>
+            @endauth
+            @guest
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('registerForm')}}">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('loginForm')}}">Login</a>
                 </li>
+            @endguest
             </ul>
         </div>
     </nav>

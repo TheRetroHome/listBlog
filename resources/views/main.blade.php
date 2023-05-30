@@ -1,5 +1,10 @@
 @extends('layouts.layout')
 @section('content')
+        @if(session()->has('success'))
+                        <div class="alert alert-success success-notification">
+                            {{session('success')}}
+                        </div>
+        @endif
 <div class="container">
         <h1 class="text-center my-4">ToDo List</h1>
 

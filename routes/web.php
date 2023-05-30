@@ -17,3 +17,6 @@ use App\Http\Controllers\HomeController;
 Route::get('/',[HomeController::class,'index'])->name('main');
 Route::get('/login',[UserController::class,'loginForm'])->name('loginForm');
 Route::get('/register',[UserController::class,'registerForm'])->name('registerForm');
+Route::post('/register',[UserController::class,'register'])->name('register');
+Route::post('/login',[UserController::class,'login'])->name('login');
+Route::get('/logout',[UserController::class,'logout'])->name('logout');
