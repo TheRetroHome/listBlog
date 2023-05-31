@@ -30,7 +30,7 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:30',
+            'name' => 'required|max:20',
         ]);
 
         Auth::user()->tags()->create($request->only('name'));

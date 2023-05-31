@@ -8,16 +8,16 @@
 @auth
 <div class="container">
     <div class="mb-3">
-        <form method="GET" action="{{route('search')}}" class="form-inline">
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-lg" placeholder="Поиск" name="search">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary btn-lg" type="submit">Поиск</button>
+            <form method="GET" action="" class="form-inline">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Поиск" name="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary btn-lg" type="submit">Поиск</button>
+                            </div>
                         </div>
-                    </div>
-        </form>
-    </div>
-    <h1 class="text-center my-4">Задания</h1>
+            </form>
+        </div>
+    <h1 class="text-center my-4">Поиск</h1>
     <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Создать задачу</a>
     <a href="{{ route('tags.index') }}" class="btn btn-primary mb-3">Теги</a>
     <a href="{{ route('tasks.completedView') }}" class="btn btn-primary mb-3">Выполненные задачи</a>

@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +21,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/logout',[UserController::class,'logout'])->name('logout');
     Route::get('/tasks/completed', [TaskController::class,'completed'])->name('tasks.completedView');
     Route::get('/tasks/tag/{tag}', [TaskController::class,'filterByTag'])->name('tasks.tag');
+    Route::get('/search',[SearchController::class,'search'])->name('search');
     Route::resource('tasks',TaskController::class);
     Route::resource('tags',TagController::class);
     Route::patch('/tasks/{task}/completed', [TaskController::class,'markAsCompleted'])->name('tasks.completed');
