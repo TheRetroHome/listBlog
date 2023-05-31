@@ -7,10 +7,10 @@
         @endif
 @auth
 <div class="container">
-        <h1 class="text-center my-4">Задания</h1>
+        <h1 class="text-center my-4">Выполненные задачи</h1>
          <a href="{{ route('tasks.create') }}" class="btn btn-primary mb-3">Создать задачу</a>
          <a href="{{ route('tags.index') }}" class="btn btn-primary mb-3">Теги</a>
-         <a href="{{ route('tasks.completedView') }}" class="btn btn-primary mb-3">Выполненные задачи</a>
+         <a href="{{ route('main') }}" class="btn btn-primary mb-3">Незавершенные задачи</a>
         <ul class="list-group">
         @forelse($tasks as $task)
         <li class="list-group-item">
@@ -26,20 +26,9 @@
                 @endforeach
             @endif
             </div>
-            <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-outline-warning btn-sm float-right ml-2">Edit</a>
-            <form method="POST" action="{{ route('tasks.completed', $task->id) }}" style="display:inline;">
-                @csrf
-                @method('PATCH')
-                <button type="submit" class="btn btn-outline-success btn-sm float-right">Done</button>
-            </form>
-            <form method="POST" action="{{ route('tasks.destroy', $task->id) }}" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger btn-sm float-right mr-2">Delete</button>
-            </form>
         </li>
     @empty
-        <li class="list-group-item">Ни одного задания не создано</li>
+        <li class="list-group-item">Нет выполненных задач</li>
     @endforelse
 </ul>
 

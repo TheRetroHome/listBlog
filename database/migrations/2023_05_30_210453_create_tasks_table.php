@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('image')->nullable();
             $table->timestamps();
-
+            $table->boolean('is_completed')->default(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 

@@ -18,7 +18,7 @@ class TaskController extends Controller
     public function index()
     {
         $tags = Tag::where('user_id', Auth::id())->get();
-        $tasks = Task::where('user_id', Auth::id())->latest()->get();
+        $tasks = Task::where('user_id', Auth::id())->where('is_completed', false)->latest()->get();
         return view('main', compact('tags','tasks'));
     }
 
@@ -133,5 +133,16 @@ class TaskController extends Controller
 
         $task->delete();
         return redirect()->route('main')->with('success', 'Task deleted successfully.');
+    }
+    public function markAsCompleted(Task $task)
+    {
+        $task->update(['is_completed' => 1]);
+        return redirect()->route('main')->with('success', 'Task marked as completed.');
+    }
+    public function completed()
+    {
+        $tags = Tag::where('user_id', Auth::id())->get();
+        $tasks = Task::where('user_id', Auth::id())->where('is_completed', true)->latest()->get();
+        return view('completed', compact('tags','tasks'));
     }
 }

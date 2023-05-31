@@ -19,8 +19,11 @@ use App\Http\Controllers\TaskController;
 Route::get('/',[TaskController::class,'index'])->name('main');
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/logout',[UserController::class,'logout'])->name('logout');
+    Route::get('/tasks/completed', [TaskController::class,'completed'])->name('tasks.completedView');
     Route::resource('tasks',TaskController::class);
     Route::resource('tags',TagController::class);
+    Route::patch('/tasks/{task}/completed', [TaskController::class,'markAsCompleted'])->name('tasks.completed');
+
 
 });
 Route::group(['middleware'=>'guest'],function(){
