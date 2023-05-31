@@ -40,9 +40,7 @@
             </ul>
         </div>
     </nav>
-
 @yield('content')
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -52,9 +50,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
+    $('.select2').select2({
+        tags: true,
+        tokenSeparators: [',', ' ']
+    });
     </script>
 </body>
 </html>
