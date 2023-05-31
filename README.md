@@ -1,66 +1,35 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## listBlog
 
-## About Laravel
+listBlog - это список дел, которые может заполнять пользователь. Встроена регистрация и авторизация. Реализован CRUD задач (с добавлением картинки 150x150) и частично тегов.
+Теги каждый пользователь может создать свои (даже если они повторяются с тегами другого пользователя).
+Пользователь не может видеть список дел других людей, а только свои. Реализована фильтрация по тегу, реализован
+поиск какой то определённого дела. Пользователь может нажать на кнопку "Done" и его дело будет считаться выполненым, удалится 
+из общего списка и будет перенесено в список "Выполненных задач".
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Установка и инструкция к использованию
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. Деплой кода начинается с его клонирование и настройка под ваш локальный веб сервер (будь то XAMPP или OpenServer), в случае с Open Server, стоит настроить домены и алиасы.
+2. Перейти в папку с проектом с помощью консоли (прим. ```cd C:\ospanel\domains\listBlog```) и прописать миграции ```php artisan migrate```, согласиться на создание новой базы данных под названием listBlog
+3. При переходе на главную страницу "/" вы обнаружите надпись _**"Чтобы воспользоваться функционалом, зарегестрируйтесь или авторизуйтесь"**_, в правом верхнем углу вы обнаружите кнопку "Register" 
+4. При успешном вводе данных вы будете вновь переброшены на главную страничку, и отныне вам доступен функционал. Для создании задачи следует нажать на кнопку "Создать задачу", для создания тегов вам следует нажать на кнопку "Теги", при нажатии на кнопку "Выполненные задачи" вы ничего там не обнаружите, там будут появляться выполненные задачи.
+5. При успешном создании тегов и задач (в задаче может быть несколько тегов), вы можете протестировать удаление, редактирование, выполнение задачи. Кнопка "Done" отправит задачу в "Выполненные задачи" и удалил из главного списка
+6. При нажатии на тег, произойдёт фильтрация по нему (чтобы вернуться на главный экран нажмите на ListBlog в левом верхнем углу)
+7. Работает также и поиск по задаче
+8. Пагинация срабатывает от 5 задач
+9. Картинка загруженная пользователем имеет разрешение 150x150 и попадает в отдельно-созданную папку с датой её загрузки.
+10. Пользователь не видит задач других пользователей (и тегов соответственно), но может создавать точно такие же теги как и у других пользователей
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Функционал
 
-## Learning Laravel
+- **Создание tasks (дел) или другими словами CRUD**
+- **Создание уникальных тегов для пользователей (формируемые самим пользователем)**
+- **Регистрация и авторизация и logout**
+- **Возможность переносить задания в список выполненных**
+- **Корректное добавление и отображение картинки 150x150**
+- **Фильтрация списка по тегу**
+- **Реализована пагинация с использованием bootstrap**
+- **Реализован поиск по названию дела (только для невыполненных заданий)**
+- **P.S Дополнительный функционал выполнен не был**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

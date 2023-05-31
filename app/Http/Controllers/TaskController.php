@@ -53,9 +53,6 @@ class TaskController extends Controller
         }
         return redirect()->route('main')->with('success', 'Task created successfully.');
     }
-
-
-
     /**
      * Display the specified resource.
      */
