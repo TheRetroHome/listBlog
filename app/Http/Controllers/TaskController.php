@@ -9,16 +9,19 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
-
+use App\Services\ImageService;
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index()
     {
         $tags = Tag::where('user_id', Auth::id())->get();
-        $tasks = Task::where('user_id', Auth::id())->where('is_completed', false)->latest()->paginate(5);
+        $tasks = Task::userTasks()->incomplete()->latest()->paginate(5);
         $pagination = $tasks->links('pagination::bootstrap-4');
         return view('main', compact('tags','tasks','pagination'));
     }
@@ -39,32 +42,15 @@ class TaskController extends Controller
     public function store(TaskStoreRequest $request)
     {
         $data = $request->validated();
-
         if ($request->hasFile('image')) {
-            // Создаем директорию с датой, если она еще не существует
-            $date = date('Y-m-d');
-            if (!File::exists(public_path("images/{$date}"))) {
-                File::makeDirectory(public_path("images/{$date}"), 0777, true);
-            }
-
-            // Загружаем изображение в новую директорию и изменяем его размер
-            $imageName = time().'.'.$request->image->extension();
-            $imagePath = public_path("images/{$date}/{$imageName}");
-            $request->image->move(public_path("images/{$date}"), $imageName);
-            $img = Image::make($imagePath)->resize(150, 150);
-            $data['image'] = "images/{$date}/{$imageName}";
-            $img->save($imagePath);
+            $data['image'] = $this->imageService->handleUpload($request->file('image'));
         }
-
         $data['user_id'] = Auth::id();
-
-        // Создаем задачу и присоединяем к ней теги
         $task = Task::create($data);
         if (isset($data['tags'])) {
             $tagIds = Tag::whereIn('name', $data['tags'])->where('user_id', Auth::id())->get()->pluck('id');
             $task->tags()->sync($tagIds);
         }
-
         return redirect()->route('main')->with('success', 'Task created successfully.');
     }
 
@@ -96,23 +82,9 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $data = $request->validated();
         if ($request->hasFile('image')) {
-            $date = date('Y-m-d', strtotime($task->created_at));
-            if (File::exists(public_path("images/{$date}/{$task->image}"))) {
-                File::delete(public_path("images/{$date}/{$task->image}"));
-            }
-
-            $date = date('Y-m-d');
-            $imageName = time().'.'.$request->image->extension();
-            $imagePath = public_path("images/{$date}/{$imageName }");
-
-            $request->image->move(public_path("images/{$date}"), $imageName);
-            $img = Image::make($imagePath)->resize(150, 150);
-            $data['image'] = "images/{$date}/{$imageName}";
-            $img->save($imagePath);
+            $data['image'] = $this->imageService->handleUpload($request->file('image'), $task->image);
         }
-
         $task->update($data);
-
         if (isset($data['tags'])) {
             $task->tags()->sync($data['tags']);
         }
@@ -143,7 +115,7 @@ class TaskController extends Controller
     public function completed()
     {
         $tags = Tag::where('user_id', Auth::id())->get();
-        $tasks = Task::where('user_id', Auth::id())->where('is_completed', true)->latest()->paginate(5);
+        $tasks = Task::userTasks()->completed()->latest()->paginate(5);
         $pagination = $tasks->links('pagination::bootstrap-4');
         return view('completed', compact('tags','tasks','pagination'));
     }
@@ -151,7 +123,7 @@ class TaskController extends Controller
     {
         $tag = Tag::where('name', $tag)->first();
         if ($tag) {
-            $tasks = $tag->tasks()->where('user_id', Auth::id())->where('is_completed',false)->latest()->paginate(5);
+            $tasks = $tag->tasks()->userTasks()->incomplete()->latest()->paginate(5);
             $pagination = $tasks->links('pagination::bootstrap-4');
             return view('main', compact('tasks','pagination'));
         } else {
