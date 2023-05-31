@@ -15,8 +15,9 @@ class SearchController extends Controller
             ->where('user_id', Auth::id())
             ->where('is_completed', false)
             ->with('tags')
-            ->get();
-        return view('search', compact('tasks'));
+            ->paginate(5);
+        $pagination = $tasks->links('pagination::bootstrap-4');
+        return view('search', compact('tasks','pagination'));
     }
 
 }

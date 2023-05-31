@@ -33,6 +33,9 @@
 </ul>
 
     </div>
+                           <div class="card-footer clearfix">
+                               {!! $pagination  !!}
+                          </div>
 @endauth
 @guest
 <h1 class="text-center my-4">Чтобы воспользоваться функционалом, зарегестрируйтесь или авторизируйтесь</h1>

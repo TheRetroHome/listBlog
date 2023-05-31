@@ -53,7 +53,9 @@
         @endforelse
     </ul>
 </div>
-
+                       <div class="card-footer clearfix">
+                           {!! $pagination  !!}
+                      </div>
 
 @endauth
 @guest

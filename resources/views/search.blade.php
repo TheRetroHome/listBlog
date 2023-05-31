@@ -49,11 +49,13 @@
             </form>
         </li>
         @empty
-        <li class="list-group-item">Ни одного задания не создано</li>
+        <li class="list-group-item">Ни одна задача не найдена</li>
         @endforelse
     </ul>
 </div>
-
+                       <div class="card-footer clearfix">
+                           {!! $pagination  !!}
+                      </div>
 
 @endauth
 @guest

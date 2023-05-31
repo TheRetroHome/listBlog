@@ -18,8 +18,9 @@ class TaskController extends Controller
     public function index()
     {
         $tags = Tag::where('user_id', Auth::id())->get();
-        $tasks = Task::where('user_id', Auth::id())->where('is_completed', false)->latest()->get();
-        return view('main', compact('tags','tasks'));
+        $tasks = Task::where('user_id', Auth::id())->where('is_completed', false)->latest()->paginate(5);
+        $pagination = $tasks->links('pagination::bootstrap-4');
+        return view('main', compact('tags','tasks','pagination'));
     }
 
 
@@ -142,15 +143,17 @@ class TaskController extends Controller
     public function completed()
     {
         $tags = Tag::where('user_id', Auth::id())->get();
-        $tasks = Task::where('user_id', Auth::id())->where('is_completed', true)->latest()->get();
-        return view('completed', compact('tags','tasks'));
+        $tasks = Task::where('user_id', Auth::id())->where('is_completed', true)->latest()->paginate(5);
+        $pagination = $tasks->links('pagination::bootstrap-4');
+        return view('completed', compact('tags','tasks','pagination'));
     }
     public function filterByTag($tag)
     {
         $tag = Tag::where('name', $tag)->first();
         if ($tag) {
-            $tasks = $tag->tasks()->where('user_id', Auth::id())->where('is_completed',false)->latest()->get();
-            return view('main', compact('tasks'));
+            $tasks = $tag->tasks()->where('user_id', Auth::id())->where('is_completed',false)->latest()->paginate(5);
+            $pagination = $tasks->links('pagination::bootstrap-4');
+            return view('main', compact('tasks','pagination'));
         } else {
             return redirect()->route('main');
         }
