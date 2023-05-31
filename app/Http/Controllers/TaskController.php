@@ -145,4 +145,15 @@ class TaskController extends Controller
         $tasks = Task::where('user_id', Auth::id())->where('is_completed', true)->latest()->get();
         return view('completed', compact('tags','tasks'));
     }
+    public function filterByTag($tag)
+    {
+        $tag = Tag::where('name', $tag)->first();
+        if ($tag) {
+            $tasks = $tag->tasks()->where('user_id', Auth::id())->where('is_completed',false)->latest()->get();
+            return view('main', compact('tasks'));
+        } else {
+            return redirect()->route('main');
+        }
+    }
+
 }

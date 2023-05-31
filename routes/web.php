@@ -20,11 +20,10 @@ Route::get('/',[TaskController::class,'index'])->name('main');
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/logout',[UserController::class,'logout'])->name('logout');
     Route::get('/tasks/completed', [TaskController::class,'completed'])->name('tasks.completedView');
+    Route::get('/tasks/tag/{tag}', [TaskController::class,'filterByTag'])->name('tasks.tag');
     Route::resource('tasks',TaskController::class);
     Route::resource('tags',TagController::class);
     Route::patch('/tasks/{task}/completed', [TaskController::class,'markAsCompleted'])->name('tasks.completed');
-
-
 });
 Route::group(['middleware'=>'guest'],function(){
     Route::get('/login',[UserController::class,'loginForm'])->name('loginForm');

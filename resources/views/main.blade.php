@@ -20,11 +20,12 @@
             {{ $task->name }}
             <div class="mt-2">
             @if($task->tags->count())
-            Теги:
+                Теги:
                 @foreach($task->tags as $tag)
-                    <span class="badge badge-primary">{{ $tag->name }}</span>
+                    <a href="{{ route('tasks.tag', $tag->name) }}" class="badge badge-primary">{{ $tag->name }}</a>
                 @endforeach
             @endif
+
             </div>
             <a href="{{ route('tasks.edit', $task->id) }}" class="btn btn-outline-warning btn-sm float-right ml-2">Edit</a>
             <form method="POST" action="{{ route('tasks.completed', $task->id) }}" style="display:inline;">
